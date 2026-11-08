@@ -19,6 +19,10 @@ export default function Merci() {
       >
         Lancer mon audit
       </Link>
+      <p className="mt-4 text-sm">
+        Ton accès reste ouvert 30 jours sur cet appareil. Pour y revenir, ouvre
+        simplement la page /outil de ce site.
+      </p>
     </main>
   );
 }
