@@ -251,6 +251,7 @@ export default function Outil() {
   const [choix, setChoix] = useState<string | null>(null);
   const [texteLettre, setTexteLettre] = useState("");
   const [copie, setCopie] = useState(false);
+  const [collage, setCollage] = useState("");
 
   async function lireFichier(e: ChangeEvent<HTMLInputElement>) {
     const fichier = e.target.files?.[0];
@@ -266,17 +267,24 @@ export default function Outil() {
       } catch {
         texte = new TextDecoder("windows-1252").decode(buf);
       }
-      const resultat = analyser(texte);
-      if (resultat === null) {
-        setErreur(
-          "Je n'arrive pas à lire ce fichier. Il faut un export CSV de ton relevé, avec les colonnes date, libellé et montant."
-        );
-        return;
-      }
-      setCharges(resultat);
+      traiter(texte);
     } catch {
       setErreur("Impossible de lire ce fichier. Essaie avec un autre export.");
     }
+  }
+
+  function traiter(texte: string) {
+    setErreur("");
+    setCharges(null);
+    setChoix(null);
+    const resultat = analyser(texte);
+    if (resultat === null) {
+      setErreur(
+        "Je n'arrive pas à lire ce relevé. Il faut une ligne d'en-tête avec les colonnes date, libellé et montant."
+      );
+      return;
+    }
+    setCharges(resultat);
   }
 
   function choisir(nom: string) {
@@ -323,6 +331,26 @@ export default function Outil() {
           className="hidden"
         />
       </label>
+
+      <div className="mt-6">
+        <p className="text-base">
+          Le fichier ne s&apos;ouvre pas ? Colle ici le contenu de ton relevé :
+        </p>
+        <textarea
+          value={collage}
+          onChange={(e) => setCollage(e.target.value)}
+          rows={6}
+          placeholder="Date;Libellé;Montant"
+          className="mt-2 w-full rounded-xl border border-black/20 bg-white p-3 text-base"
+        />
+        <button
+          type="button"
+          onClick={() => traiter(collage)}
+          className="mt-2 min-h-11 rounded-xl border border-black/20 px-5 py-2 text-base font-semibold"
+        >
+          Analyser le texte collé
+        </button>
+      </div>
 
       {erreur && <p className="mt-4 text-base font-semibold">{erreur}</p>}
 
