@@ -24,12 +24,12 @@ export async function POST(request: Request) {
             product_data: {
               name: "Fantômes — Audit complet",
               description:
-                "Détection des abonnements oubliés, lettres de résiliation, total économisé.",
+                "Analyse de ton relevé bancaire dans ton navigateur : abonnements qui reviennent chaque mois, coût annuel, lettres de résiliation.",
             },
           },
         },
       ],
-      success_url: `${origin}/merci`,
+      success_url: `${origin}/api/acces?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?paiement=annule`,
     });
 
