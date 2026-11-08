@@ -10,8 +10,7 @@ export default function Merci() {
         Paiement reçu. Merci.
       </h1>
       <p className="mt-4 text-lg">
-        Ton paiement a bien été enregistré. Les instructions d&apos;accès te
-        seront envoyées par email.
+        Ton paiement a bien été enregistré. Tu recevras ton audit à l&apos;adresse e-mail utilisée pour payer, sous 24 heures.
       </p>
       <Link
         href="/"
